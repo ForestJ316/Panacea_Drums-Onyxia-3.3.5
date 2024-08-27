@@ -1,14 +1,13 @@
-## Panacea_Drums-Endless-TBC-3.3.5
+## Panacea_Drums-Onyxia-3.3.5
 - Title: Panacea Drums
 - Notes: Raid Drum Timers
 - Author: ccKep, Modified by Tsunadee, Updated by Distorted.
-- Updated version of Panacea Drums for Endless-TBC 3.3.5 Client.
-## [Download Here](https://github.com/Distorted39/Panacea_Drums-Endless-TBC-3.3.5/archive/refs/heads/master.zip)
+- Updated version of Panacea Drums for Onyxia-TBC on 3.3.5 Client.
+## [Download Here](https://github.com/ForestJ316/Panacea_Drums-Onyxia-3.3.5/archive/refs/heads/master.zip)
   
 ## Setup
-- Put "Panacea_Drums" and "!BugGrabber" in the AddOns folder.
+- Put "Panacea_Drums" in the AddOns folder.
 - World of Warcraft\Interface\Addons\Panacea_Drums
-- World of Warcraft\Interface\Addons\\!BugGrabber
 
 ## What this addon can do:
 
