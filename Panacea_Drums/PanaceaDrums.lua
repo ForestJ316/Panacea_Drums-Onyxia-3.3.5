@@ -72,11 +72,6 @@ do
 	})
 end
 
-
-
-
-
-
 function Panacea_Drums:OnInitialize()
 	
 	
@@ -122,8 +117,10 @@ end
 function Panacea_Drums:OnEnable()
 	Panacea_Drums:SwitchLayout(Panacea_Drums.db.profile.layout)
 
-	self:AddEventListener("Blizzard", "COMBAT_LOG_EVENT_UNFILTERED")
+	--self:AddEventListener("Blizzard", "COMBAT_LOG_EVENT_UNFILTERED")
+	self:AddEventListener("Blizzard", "UNIT_SPELLCAST_SUCCEEDED")
     self:AddEventListener("Blizzard", "CHAT_MSG_PARTY")
+	self:AddEventListener("Blizzard", "CHAT_MSG_PARTY_LEADER")
 	--self:AddEventListener("Blizzard", "CHAT_MSG_WHISPER")
 	self:AddEventListener("Blizzard", "PARTY_MEMBERS_CHANGED")	
 	self:AddEventListener("Blizzard", "PARTY_MEMBER_ENABLE")	
@@ -171,7 +168,9 @@ function Panacea_Drums:CHAT_MSG_ADDON(namespace, event, ...)
 		elseif text=="Drums of War" then
 			Panacea_Drums:SetRotation(35475, author)
 		elseif text=="Drums of Restoration" then
-			Panacea_Drums:SetRotation(35478, author)		
+			Panacea_Drums:SetRotation(35478, author)
+		elseif text=="Drums of Speed" then
+			Panacea_Drums:SetRotation(35477, author)
 		else
 			-- -- sync the rotaion			
 			-- for name in string.gmatch(text, "[^%s]+") do
@@ -184,63 +183,70 @@ function Panacea_Drums:CHAT_MSG_ADDON(namespace, event, ...)
 	
 		
 	elseif prefix=="Panacea_DrumsB" and distribution== "PARTY" and Panacea_Drums:GetDrumWatched()==29529 then
-			-- clear the table
-			Panacea_Drums:ResetRotationTable ()
-			
-			-- check if the sync rotation contains your name, if not, add yourself on last position
-			local namefound=1
-			local RotationNames={} 				
-			local pos1, pos2, name, rest = string.find(text, "^%s-(%S+)(.*)");	
-			local rotationtext=""
-			RotationNames[1]=name
-			for i=2, 5 do	
-				if rest~=nil then
-					pos1, pos2, name, rest = string.find(rest, "^%s-(%S+)(.*)");
-					RotationNames[i]=name;				
-				else -- end of the names, check if the player was in there					
-						
-					if Panacea_Drums:IsNameInRotation(UnitName("player"), RotationNames)== false then
-						-- if no second name is in the rotation, it means the list was blank when the drummer did his drum, so he will go 2nd, and not 1st
-						if i==2 then
-							RotationNames[2]=RotationNames[1]
-							RotationNames[1]=UnitName("player")					
-							namefound=0
-						else
-							RotationNames[i]=UnitName("player")
-							namefound=0
-						end
+		-- clear the table
+		Panacea_Drums:ResetRotationTable ()
+		
+		-- check if the sync rotation contains your name, if not, add yourself on last position
+		local namefound=1
+		local RotationNames={} 				
+		local pos1, pos2, name, rest = string.find(text, "^%s-(%S+)(.*)");	
+		local rotationtext=""
+		RotationNames[1]=name
+		for i=2, 5 do	
+			if rest~=nil then
+				pos1, pos2, name, rest = string.find(rest, "^%s-(%S+)(.*)");
+				RotationNames[i]=name;				
+			else -- end of the names, check if the player was in there					
+					
+				if Panacea_Drums:IsNameInRotation(UnitName("player"), RotationNames)== false then
+					-- if no second name is in the rotation, it means the list was blank when the drummer did his drum, so he will go 2nd, and not 1st
+					if i==2 then
+						RotationNames[2]=RotationNames[1]
+						RotationNames[1]=UnitName("player")					
+						namefound=0
+					else
+						RotationNames[i]=UnitName("player")
+						namefound=0
 					end
 				end
 			end
-			
-			-- sync the rotation
-			for i=1, 5 do
-				if RotationNames[i]~=nil then				
-					Panacea_Drums:SetRotation(35476, RotationNames[i])
-					rotationtext= rotationtext..RotationNames[i].." "
-				end
+		end
+		
+		-- sync the rotation
+		for i=1, 5 do
+			if RotationNames[i]~=nil then				
+				Panacea_Drums:SetRotation(35476, RotationNames[i])
+				rotationtext= rotationtext..RotationNames[i].." "
 			end
-			
-			
-			if namefound==0 then
-			-- advertise that the player is back on the rotation				
-				--SendChatMessage("drummers battle "..rotationtext, "PARTY", nil, author);	
-				SendAddonMessage("Panacea_DrumsB", " "..rotationtext, "PARTY", "target")
-			end	
-			
+		end
+		
+		
+		if namefound==0 then
+		-- advertise that the player is back on the rotation				
+			--SendChatMessage("drummers battle "..rotationtext, "PARTY", nil, author);	
+			SendAddonMessage("Panacea_DrumsB", " "..rotationtext, "PARTY", "target")
+		end	
 			
 	elseif prefix=="Panacea_DrumsW" and distribution== "PARTY" and Panacea_Drums:GetDrumWatched()==29528 then
-			-- sync the rotation
-			Panacea_Drums:ResetRotationTable ()
-			for name in string.gmatch(text, "[^%s]+") do
-			 Panacea_Drums:SetRotation(35475, name)
-			end
+		-- sync the rotation
+		Panacea_Drums:ResetRotationTable ()
+		for name in string.gmatch(text, "[^%s]+") do
+			Panacea_Drums:SetRotation(35475, name)
+		end
+
 	elseif prefix=="Panacea_DrumsR" and distribution== "PARTY" and Panacea_Drums:GetDrumWatched()==29531 then
-			-- sync the rotation
-			Panacea_Drums:ResetRotationTable ()
-			for name in string.gmatch(text, "[^%s]+") do
-			 Panacea_Drums:SetRotation(35478, name)
-			end
+		-- sync the rotation
+		Panacea_Drums:ResetRotationTable ()
+		for name in string.gmatch(text, "[^%s]+") do
+			Panacea_Drums:SetRotation(35478, name)
+		end
+
+	elseif prefix=="Panacea_DrumsS" and distribution== "PARTY" and Panacea_Drums:GetDrumWatched()==29530 then
+		-- sync the rotation
+		Panacea_Drums:ResetRotationTable ()
+		for name in string.gmatch(text, "[^%s]+") do
+			Panacea_Drums:SetRotation(35477, name)
+		end
 	end
 	-- play sound if enabled
 	if prefix=="Panacea_Drums" and distribution== "WHISPER" then
@@ -277,6 +283,17 @@ function Panacea_Drums:SetAlpha()
 	end
 end
 
+function Panacea_Drums:UNIT_SPELLCAST_SUCCEEDED(_, _, unitID, spellName)
+	-- If player in raid then it fires 2 times - player and raid unitid
+	-- If player in party then it fires 1 time - player unitid
+	-- Just return on player raidid unitid, since we don't want to run it 2 times
+	if unitID:match("raid") and UnitIsUnit(unitID, "player") then return end
+	-- For different locales
+	local drum = self:GetDrumByName(spellName)
+	if not drum then return end
+	self:Drum(drum, unitID)
+end
+
 function Panacea_Drums:COMBAT_LOG_EVENT_UNFILTERED(namespace, event, ...)
 	Panacea_Drums:SetAlpha() 
 	local timestamp, event = ...
@@ -294,44 +311,43 @@ end
 
 -- when the party changes, will update the rotation list and mark them as OUT
 function Panacea_Drums:PARTY_MEMBERS_CHANGED(namespace, event, ...)	
-self.Layout:PartyRotationCheck()
-Panacea_Drums:SetAlpha() 
+	self.Layout:PartyRotationCheck()
+	Panacea_Drums:SetAlpha() 
 end
 
 function Panacea_Drums:PARTY_MEMBER_ENABLE(namespace, event, ...)	
-self.Layout:PartyRotationCheck()
-Panacea_Drums:SetAlpha() 
+	self.Layout:PartyRotationCheck()
+	Panacea_Drums:SetAlpha() 
 end
 
 function Panacea_Drums:PARTY_MEMBER_DISABLE(namespace, event, ... )	
-
-self.Layout:PartyRotationCheck()
-Panacea_Drums:SetAlpha() 
+	self.Layout:PartyRotationCheck()
+	Panacea_Drums:SetAlpha() 
 end
 
 function Panacea_Drums:GUILD_ROSTER_UPDATE(namespace, event, ... )
-self.Layout:PartyRotationCheck()
-Panacea_Drums:SetAlpha() 
+	self.Layout:PartyRotationCheck()
+	Panacea_Drums:SetAlpha() 
 end
 
 function Panacea_Drums:ResetRotationTable ()
-self.Layout:ResetTable()	
+	self.Layout:ResetTable()	
 end
 
--- cvz added for chat interaction
-function Panacea_Drums:CHAT_MSG_PARTY(namespace, event, msg, author, ...)	
-	
+function PartyMessageHandler(msg, author)
 	if( msg == "Drummers" or msg=="drummers") then
 		-- resets the table
 		Panacea_Drums:ResetRotationTable ()
 		
 		-- advertising for the others the current tracking drum 
 		if Panacea_Drums:GetDrumWatched()==29529 then			
-			Panacea_Drums:ReplyForRotation("Drums of Battle");		
+			Panacea_Drums:ReplyForRotation("Drums of Battle")	
 		elseif Panacea_Drums:GetDrumWatched()==29528 then
-			Panacea_Drums:ReplyForRotation("Drums of War");	
+			Panacea_Drums:ReplyForRotation("Drums of War")
 		elseif Panacea_Drums:GetDrumWatched()==29531 then
-			Panacea_Drums:ReplyForRotation("Drums of Restoration");	
+			Panacea_Drums:ReplyForRotation("Drums of Restoration")
+		elseif Panacea_Drums:GetDrumWatched()==29530 then
+			Panacea_Drums:ReplyForRotation("Drums of Speed")
 		end
 	
 	elseif author==UnitName("player") then
@@ -345,13 +361,15 @@ function Panacea_Drums:CHAT_MSG_PARTY(namespace, event, msg, author, ...)
 			--SendChatMessage("pos1= "..pos1.." pos2= "..pos2.." cmd="..cmd.."-", "RAID", nil, author);
 			--SendChatMessage("cmd= "..cmd, "RAID", nil, author);
 			if cmd=="battle" then				
-				Panacea_Drums:ManualRotation(	"Panacea_DrumsB", rest, 0) 
+				Panacea_Drums:ManualRotation("Panacea_DrumsB", rest, 0) 
 			elseif cmd=="resto" then
-				Panacea_Drums:ManualRotation(	"Panacea_DrumsR", rest, 0) 
+				Panacea_Drums:ManualRotation("Panacea_DrumsR", rest, 0) 
 			elseif cmd=="war" then
-				Panacea_Drums:ManualRotation(	"Panacea_DrumsW", rest, 0) 
+				Panacea_Drums:ManualRotation("Panacea_DrumsW", rest, 0)
+			elseif cmd=="speed" then
+				Panacea_Drums:ManualRotation("Panacea_DrumsS", rest, 0)
 			elseif cmd=="rotation" then
-				Panacea_Drums:ManualRotation(	"Panacea_DrumsW", rest, 1 )
+				Panacea_Drums:ManualRotation("Panacea_DrumsW", rest, 1 )
 			
 			else
 				if author==UnitName("player") then
@@ -362,9 +380,16 @@ function Panacea_Drums:CHAT_MSG_PARTY(namespace, event, msg, author, ...)
 	end
 end
 
+function Panacea_Drums:CHAT_MSG_PARTY_LEADER(_, _, msg, author, ...)
+	PartyMessageHandler(msg, author)
+end
+
+-- cvz added for chat interaction
+function Panacea_Drums:CHAT_MSG_PARTY(_, _, msg, author, ...)	
+	PartyMessageHandler(msg, author)	
+end
+
 function Panacea_Drums:ManualRotation (channel, manualtext, cmd)
-	
-	
 	local ActiveRotationText=self.Layout:whisperRunningRotation()
 	local names = {} 
 	local Activenames = {}
@@ -457,9 +482,11 @@ function Panacea_Drums:ManualRotation (channel, manualtext, cmd)
 			if Panacea_Drums:GetDrumWatched()==29529 then			
 				text="Drums of Battle Rotation: " 		
 			elseif Panacea_Drums:GetDrumWatched()==29528 then
-				text="Drums of Battle War: " 		
+				text="Drums of War Rotation: " 		
 			elseif Panacea_Drums:GetDrumWatched()==29531 then
-				text="Drums of Restoration Rotation: " 		
+				text="Drums of Restoration Rotation: " 
+			elseif Panacea_Drums:GetDrumWatched()==29530 then
+				text="Drums of Speed Rotation: "		
 			end
 			-- asking for active rotation	
 			--text="Drums Rotation: "	
@@ -590,19 +617,18 @@ function Panacea_Drums:DrumsAlmostFaded(drum, drummer)
 	end
 end
 
-
-
-
 function Panacea_Drums:SendRotation() 
 -- send to messagechat PARTY the current rotation
 local text=self.Layout:whisperRunningRotation()
 
-	if Panacea_Drums:GetDrumWatched()==29529 then	 -- batte		
+	if Panacea_Drums:GetDrumWatched()==29529 then -- Battle		
 		SendAddonMessage("Panacea_DrumsB", " "..text, "PARTY", "target")
 	elseif Panacea_Drums:GetDrumWatched()==29528 then -- War
 		SendAddonMessage("Panacea_DrumsW", " "..text, "PARTY", "target")
-	elseif Panacea_Drums:GetDrumWatched()==29531 then -- restoration
+	elseif Panacea_Drums:GetDrumWatched()==29531 then -- Restoration
 		SendAddonMessage("Panacea_DrumsR", " "..text, "PARTY", "target")
+	elseif Panacea_Drums:GetDrumWatched()==29530 then -- Speed
+		SendAddonMessage("Panacea_DrumsS", " "..text, "PARTY", "target")
 	end
 --SendAddonMessage("Panacea_Drums", text, "PARTY", "target")
 

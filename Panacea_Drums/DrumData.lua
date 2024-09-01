@@ -52,7 +52,7 @@ Panacea_Drums.Drums = Drums
 function Panacea_Drums:GetDrumByName(name)
 	for k,v in pairs(self.Drums) do
 		local itemname = GetItemInfo(v.item)
-		if name:match(itemname) then
+		if itemname and name:match(itemname) then
 			return v
 		end
 	end

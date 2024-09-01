@@ -471,10 +471,11 @@ Panacea_Drums.options = {
 				},
 			},
 		},
+		--[[
 		LayoutSettings = {
-			type = "",
-			name = L[""],
-			desc = L[""],
+			type = "group",
+			name = L["Layout Specific Settings"],
+			desc = L["Settings specific to each Layout"],
 			order = 2,
 			args = function()
 				local t = {}
@@ -493,5 +494,6 @@ Panacea_Drums.options = {
 				return t
 			end,
 		},
+		]]
 	},
 }
