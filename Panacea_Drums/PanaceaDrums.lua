@@ -406,16 +406,23 @@ function Panacea_Drums:ManualRotation (channel, manualtext, cmd)
 	end
 	
 	
-	pos1, pos2, name, rest = string.find(manualtext, "^%s-(%S+)(.*)");	
-	if name~=nil then 
-			
-		
+	pos1, pos2, name, rest = string.find(manualtext, "^%s-(%S+)(.*)");
+	if name~=nil then
+		-- Add ability to write rotation with lowercase names
+		local firstLowercase = strmatch(name, "%l?")
+		if firstLowercase ~= "" and firstLowercase ~= nil then
+			name = strupper(firstLowercase)..strsub(name, 2)
+		end
 		names[1]=name;
-		
 		for i=2, 5 do
-		
 			if rest~=nil then
 				pos1, pos2, name, rest = string.find(rest, "^%s-(%S+)(.*)");
+				if name ~= nil then
+					local restFirstLowercase = strmatch(name, "%l?")
+					if restFirstLowercase ~= "" and restFirstLowercase ~= nil then
+						name = strupper(restFirstLowercase)..strsub(name, 2)
+					end
+				end
 				names[i]=name;
 			end
 		end
