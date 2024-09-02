@@ -362,7 +362,7 @@ function PartyMessageHandler(msg, author)
 			--SendChatMessage("cmd= "..cmd, "RAID", nil, author);
 			if cmd=="battle" then				
 				Panacea_Drums:ManualRotation("Panacea_DrumsB", rest, 0) 
-			elseif cmd=="resto" then
+			elseif cmd=="resto" or cmd=="restoration" then
 				Panacea_Drums:ManualRotation("Panacea_DrumsR", rest, 0) 
 			elseif cmd=="war" then
 				Panacea_Drums:ManualRotation("Panacea_DrumsW", rest, 0)
@@ -496,8 +496,10 @@ function Panacea_Drums:ManualRotation (channel, manualtext, cmd)
 				text="Drums of Speed Rotation: "		
 			end
 			-- asking for active rotation	
-			--text="Drums Rotation: "	
-			text=text..Activenames[1];	
+			--text="Drums Rotation: "
+			if Activenames[1]~=nil then	
+				text=text..Activenames[1];
+			end
 			
 			for i=2, 5 do
 				if Activenames[i]~=nil then

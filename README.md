@@ -34,27 +34,27 @@ _Tip: The most important setting for most people will be to uncheck the "Lock Dr
 `drummers`
 
 Will automatically set up a rotation with everyone else. (On the drum you are currently watching.)
-
+___
 `drummers rotation`
 
 Will advertise the current rotation in the party chat for everyone to see.
-
+___
 `drummers <DrumType> <Name1> [<Name2>...]`
 
-Changes the party's drum rotation to a specific order.
+Changes the party's drum rotation to a specific order. Names can be lowercase.
 
-_DrumType is one of: battle, resto, war._
+*DrumType is one of: battle, resto, war, speed.*
 
-Example: `drummers battle Bob Richard Sonya Thomas`, which will set up a Drums of Battle rotation in that order, assuming all names are in the party.
-
+Example: `drummers battle Bob Richard Sonya Thomas` or `drummers battle bob richard sonya thomas`, which will set up a Drums of Battle rotation in that order, assuming all names are in the party.
+___
 `drummers <DrumType> <Pos1> <Pos2> <Pos3> <Pos4>`
 
 Changes the order of the current rotation.
 
 Example: `drummers battle 2 1 3 4`, which will switch the 1st and 2nd players in the current rotation so that the 2nd person goes first instead. If assuming the "Bob Richard Sonya Thomas" example above was used, the new rotation would become "Richard Bob Sonya Thomas".
-
+___
 `drummers <DrumType> [Mix of <Name> and <Pos> entries]`
 
 Changes the order _and adds_ someone new in a specific place.
 
-Example: `drummers battle 2 1 3 Philip 4`, which will switch the 1st and 2nd players, and add Philip before the final (4th) player. If assuming the "Bob Richard Sonya Thomas" example above was used, the new rotation would become "Richard Bob Sonya Philip Thomas".
+Example: `drummers battle 2 1 3 Philip 4` or `drummers battle 2 1 3 philip 4`, which will switch the 1st and 2nd players, and add Philip before the final (4th) player. If assuming the "Bob Richard Sonya Thomas" example above was used, the new rotation would become "Richard Bob Sonya Philip Thomas".
