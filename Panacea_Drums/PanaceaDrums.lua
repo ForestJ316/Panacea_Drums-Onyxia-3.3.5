@@ -129,7 +129,7 @@ function Panacea_Drums:OnEnable()
 	--self:RegisterEvent("CHAT_MSG_PARTY")
 	self:AddEventListener("CHAT_MSG_ADDON")
 	self:SetConfigTable(self.options)
-	self:SetConfigSlashCommand("/Panacea_Drums", "/ccd")
+	self:SetConfigSlashCommand("/Panacea_Drums", "/ccd", "/drums")
 	self.options.extraArgs.active = nil
 	
 	--local eventframe;
