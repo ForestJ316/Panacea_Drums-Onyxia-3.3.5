@@ -58,7 +58,9 @@ Panacea_Drums.options = {
 			choices = function()
 				local t = {}
 				for k,v in pairs(Panacea_Drums.Layouts) do
-					table_insert(t,v.name)
+					if v.name == "Simple Drum" then
+						table_insert(t,v.name)
+					end
 				end
 				return t
 			end,
