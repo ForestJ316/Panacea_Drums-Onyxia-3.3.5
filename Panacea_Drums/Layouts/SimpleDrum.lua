@@ -55,7 +55,12 @@ function Layout:Drummed(drum, drummer)
 		tex = tex:sub(1,-1)
 
 		frame.toptext:SetText(tex)
-		frame.NbItemtext:SetText(GetItemCount(Panacea_Drums:GetDrumWatched(), nil, true))
+		local drumWatched = Panacea_Drums:GetDrumWatched()
+		if drumWatched == 6948 then
+			frame.NbItemtext:SetText(nil)
+		else
+			frame.NbItemtext:SetText(GetItemCount(drumWatched, nil, true))
+		end
 	end
 end
 function Layout:ResetTable()
@@ -63,8 +68,12 @@ function Layout:ResetTable()
 	local tex="";
 	local frame = self.frame
 	frame.toptext:SetText(tex)
-	frame.NbItemtext:SetText(GetItemCount(Panacea_Drums:GetDrumWatched(), nil, true))
-
+	local drumWatched = Panacea_Drums:GetDrumWatched()
+	if drumWatched == 6948 then
+		frame.NbItemtext:SetText(nil)
+	else
+		frame.NbItemtext:SetText(GetItemCount(drumWatched, nil, true))
+	end
 end
 
 function Layout:SetDrummedRotation(drum, drummer)
@@ -104,7 +113,12 @@ function Layout:SetDrummedRotation(drum, drummer)
 		tex = tex:sub(1,-1)
 
 		frame.toptext:SetText(tex)
-		frame.NbItemtext:SetText(GetItemCount(Panacea_Drums:GetDrumWatched(), nil, true))
+		local drumWatched = Panacea_Drums:GetDrumWatched()
+		if drumWatched == 6948 then
+			frame.NbItemtext:SetText(nil)
+		else
+			frame.NbItemtext:SetText(GetItemCount(drumWatched, nil, true))
+		end
 	end
 end
 
@@ -139,7 +153,12 @@ local tex = ""
 		tex = tex:sub(1,-1)
 		if frame then
 			frame.toptext:SetText(tex)
-			frame.NbItemtext:SetText(GetItemCount(Panacea_Drums:GetDrumWatched(), nil, true))
+			local drumWatched = Panacea_Drums:GetDrumWatched()
+			if drumWatched == 6948 then
+				frame.NbItemtext:SetText(nil)
+			else
+				frame.NbItemtext:SetText(GetItemCount(drumWatched, nil, true))
+			end
 		end
 
 end

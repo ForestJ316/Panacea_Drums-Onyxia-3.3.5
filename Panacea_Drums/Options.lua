@@ -83,6 +83,11 @@ Panacea_Drums.options = {
 						for kf,vf in pairs(Panacea_Drums.frames) do
 							vf.mainframe:SetAttribute("item", "item:"..v.item)
 							vf:SetIcon(v.texture)
+							if v.item == 6948 then -- Don't show charges for Hearthstone
+								vf.NbItemtext:SetText(nil)
+							else
+								vf.NbItemtext:SetText(GetItemCount(v.item, nil, true))
+							end
 						end
 
 						return

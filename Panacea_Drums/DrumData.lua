@@ -38,12 +38,12 @@ local Drums = {
 		cooldown = 120,
 		texture = [[Interface\Icons\INV_MISC_Drum_04]],
 	},
-	demon = {
+	hearthstone = {
 		item = 6948,
-		spell = 687,
+		spell = 8690,
 		duration = 15,
 		cooldown = 25,
-		texture = [[Interface\Icons\Spell_Shadow_RagingScream]],
+		texture = [[Interface\Icons\INV_MISC_Rune_01]],
 	}
 }
 

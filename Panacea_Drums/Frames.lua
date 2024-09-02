@@ -152,7 +152,13 @@ function Panacea_Drums:CreateSingleFrame(framename)
 	object:SetShadowOffset(8/10, -8/10)
 	Drum.bottomtext = object
 
-	Drum.NbItemtext:SetText( GetItemCount(Panacea_Drums:GetDrumWatched(), nil, true))
+	local drumWatched = Panacea_Drums:GetDrumWatched()
+	-- Don't show charges for Hearthstone
+	if drumWatched == 6948 then
+		Drum.NbItemtext:SetText(nil)
+	else
+		Drum.NbItemtext:SetText(GetItemCount(drumWatched, nil, true))
+	end
 	
 	Drum.Lock = function(self)
 		self.anchor:Hide()
