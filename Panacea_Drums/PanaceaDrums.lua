@@ -290,7 +290,8 @@ function Panacea_Drums:UNIT_SPELLCAST_SUCCEEDED(_, _, unitID, spellName)
 	if unitID:match("raid") and UnitIsUnit(unitID, "player") then return end
 	-- For different locales
 	local drum = self:GetDrumByName(spellName)
-	if not drum then return end
+	-- Ignore Hearthstone
+	if not drum or drum.spell == 8690 then return end
 	self:Drum(drum, unitID)
 end
 
