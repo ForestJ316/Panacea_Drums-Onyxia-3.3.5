@@ -588,8 +588,10 @@ function Panacea_Drums:DrumsFaded(drum, drummer)
 		-- Enable Party announcement
 		if self.db.profile.announceparty and GetNumPartyMembers() > 0 then
 			local itemlink = select(2, GetItemInfo(drum.item))
-			local nextdrummer = self.Layout:ReturnFirstOnList();
-			SendChatMessage(L["-- %s faded, "..nextdrummer.." now!"]:format(itemlink), "PARTY")				
+			local nextdrummer = self.Layout:ReturnFirstOnList()
+			if nextdrummer then
+				SendChatMessage(L["-- %s faded, "..nextdrummer.." now!"]:format(itemlink), "PARTY")
+			end			
 		end
 		
 		
