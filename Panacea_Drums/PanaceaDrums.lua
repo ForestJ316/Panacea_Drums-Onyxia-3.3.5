@@ -583,26 +583,24 @@ end
 
 function Panacea_Drums:DrumsFaded(drum, drummer)
 	if drummer == "player" then
-		local nextdrummer = self.Layout:ReturnFirstOnList();
+		local nextdrummer = self.Layout:ReturnFirstOnList()
+		if not nextdrummer then return end
 		
 		-- Enable Party announcement
 		if self.db.profile.announceparty and GetNumPartyMembers() > 0 then
 			local itemlink = select(2, GetItemInfo(drum.item))
-			local nextdrummer = self.Layout:ReturnFirstOnList()
-			if nextdrummer then
-				SendChatMessage(L["-- %s faded, "..nextdrummer.." now!"]:format(itemlink), "PARTY")
-			end			
+			SendChatMessage(L["-- %s faded, "..nextdrummer.." now!"]:format(itemlink), "PARTY")	
 		end
 		
 		
 		-- Enable whisper announcement
 		if self.db.profile.whisper then
-			if nextdrummer ~= UnitName("player")  then				
-				SendChatMessage("<Panacea_Drums> DRUMS NOW!!!! DRUMS NOW!!!!", "WHISPER", nil, nextdrummer );
+			if nextdrummer ~= UnitName("player") then				
+				SendChatMessage("<Panacea_Drums> DRUMS NOW!!!! DRUMS NOW!!!!", "WHISPER", nil, nextdrummer)
 			end 
 		end
 		
-		if nextdrummer ~= UnitName("player")  then	-- avoid having the sound when you're alone (e.i next one is you)	
+		if nextdrummer ~= UnitName("player") then	-- avoid having the sound when you're alone (e.i next one is you)	
 			-- sends an addonmessage either way when the drum is done (used for Sound)
 			SendAddonMessage("Panacea_Drums", "Next", "WHISPER", nextdrummer)
 		end 
