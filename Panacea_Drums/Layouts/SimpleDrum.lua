@@ -187,21 +187,21 @@ function Layout:OnInitialize()
 	end
 
 	if not self.settings.fonts.toptext then
-		self.settings.fonts.toptext = SharedMedia:Fetch("font", "Adventure")
+		self.settings.fonts.toptext = SharedMedia:Fetch("font", "Friz Quadrata TT")
 	end
 	if not self.settings.fonts.toptextsize then
 		self.settings.fonts.toptextsize = 10
 	end
 
 	if not self.settings.fonts.centertext then
-		self.settings.fonts.centertext = SharedMedia:Fetch("font", "Adventure")
+		self.settings.fonts.centertext = SharedMedia:Fetch("font", "Friz Quadrata TT")
 	end
 	if not self.settings.fonts.centertextsize then
 		self.settings.fonts.centertextsize = 15
 	end
 
 	if not self.settings.fonts.bottomtext then
-		self.settings.fonts.bottomtext = SharedMedia:Fetch("font", "Adventure")
+		self.settings.fonts.bottomtext = SharedMedia:Fetch("font", "Friz Quadrata TT")
 	end
 	if not self.settings.fonts.bottomtextsize then
 		self.settings.fonts.bottomtextsize = 10
